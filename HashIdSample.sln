@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashIdSample", "JOIHashIds\HashIdSample.csproj", "{A2C722D4-7341-4C18-8A47-8AF8088D1AC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashIdSample", "HashIdSample\HashIdSample.csproj", "{A2C722D4-7341-4C18-8A47-8AF8088D1AC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
