@@ -1,0 +1,15 @@
+﻿@model List<HashIdSample.Controllers.Contact>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<ul>
+    @foreach (var contact in Model)
+    {
+        <li>
+            <a href="@Url.Action("Contact", new {id = contact.Id.HashId()})">
+                @contact.FirstName
+            </a>
+        </li>
+    }
+</ul>
