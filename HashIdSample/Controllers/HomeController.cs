@@ -1,26 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Bogus;
-using HashIdSample.Filters;
-using Microsoft.AspNetCore.Mvc;
-using HashIdSample.Models;
-using HashidsNet;
+﻿using Bogus;
 using HashIdSample.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using HashIdSample.Models;
 
 namespace HashIdSample.Controllers
 {
-    public class Contact
+    public class HashIdFilter : ActionFilterAttribute
     {
-        public long Id { get; set; }
-        public string FirstName { get; set; }
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            foreach (var routeDataValue in context.RouteData.Values)
+                if (routeDataValue.Key.EndsWith("id", StringComparison.OrdinalIgnoreCase))
+                    context.ActionArguments[routeDataValue.Key] = HashIdsUtil.Decode(routeDataValue.Value);
+
+            base.OnActionExecuting(context);
+        }
     }
 
     public class HomeController : Controller
     {
-        public List<Contact> MyContacts {
+        public List<Contact> AllContacts {
             get
             {
                 Randomizer.Seed = new Random(0);
@@ -34,28 +37,15 @@ namespace HashIdSample.Controllers
             }
         } 
 
-        [JOIHashIdFilter]
         public IActionResult Index()
         {            
-            return View(MyContacts);
+            return View(AllContacts);
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        [JOIHashIdFilter]
+        [HashIdFilter]
         public IActionResult Contact(long id)
         {
-            return View(MyContacts.FirstOrDefault(x => x.Id.Equals(id)));
-        }
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(AllContacts.FirstOrDefault(x => x.Id.Equals(id)));
         }
     }
 }
