@@ -3,13 +3,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-<ul>
-    @foreach (var contact in Model)
-    {
-        <li>
-            <a href="@Url.Action("Contact", new {id = contact.Id.HashId()})">
-                @contact.FirstName
-            </a>
-        </li>
-    }
-</ul>
+<div class="row">
+    <div class="col-sm-4">
+        <ul class="list-group">
+            @foreach (var contact in Model)
+            {
+                <li class="list-group-item"><a href="@Url.Action("Contact", new {id = contact.Id.HashId()})">@contact.FirstName</a></li>
+            }
+        </ul>
+    </div>
+</div>

@@ -38,7 +38,11 @@ namespace HashIdSample.Controllers
         } 
 
         public IActionResult Index()
-        {            
+        {
+            var teste = HashIdsUtil.Encode(1);
+
+            var te = HashIdsUtil.Decode(teste);
+
             return View(AllContacts);
         }
 
